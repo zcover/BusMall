@@ -1,3 +1,7 @@
-h1 {
-    
+body {
+    background-color: rgb(7, 132, 136)
+}
+
+canvas {
+    border: 2px solid black;
 }
