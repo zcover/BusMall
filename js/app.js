@@ -10,17 +10,14 @@
 //create tracking for "times seen"
 //render page
 
-
 //global Variables
 var productOneEl = document.getElementById('product-one');
 var productTwoEl = document.getElementById('product-two');
 var productThreeEl = document.getElementById('product-three');
 var productContainerEl = document.getElementById('product-container');
-
 var allProducts = [];
 var recentRandomNumbers = [];
-
-
+var questionLimit = 0
 
 //Constructor
 function Product(name){
@@ -28,10 +25,8 @@ function Product(name){
     this.filepath = `img/${name}`;
     this.votes=0;
     this.views=0;
-
     allProducts.push(this)
 };
-
 //all of the images by name
 new Product('bag.jpg');
 new Product('banana.jpg');
@@ -53,7 +48,6 @@ new Product('unicorn.jpg');
 new Product('usb.gif');
 new Product('water-can.jpg');
 new Product('wine-glass.jpg');
-
 //render function
 function render(){
     var randomIndex = getUniqueIndex();
@@ -67,50 +61,43 @@ function render(){
     productTwoEl.src = allProducts[randomIndex].filepath;
     productTwoEl.alt = allProducts[randomIndex].name;
     productTwoEl.title = allProducts[randomIndex].name;
-    
+
     var randomIndex = getUniqueIndex();
     allProducts[randomIndex].views++;
     productThreeEl.src = allProducts[randomIndex].filepath;
     productThreeEl.alt = allProducts[randomIndex].filepath;
     productThreeEl.title = allProducts[randomIndex].filepath;
-};
-
+    
+    questionLimit++;
+    console.log(questionLimit,' is the question limit counter');
+    console.log(questionLimit, ' images voted on, ', 25 - questionLimit, ' images left.');
+  };
 //helper function
 function randomNumber(min, max) {
-    return Math.ceil(Math.random() * (max - min + 1)) + min
+    return Math.floor(Math.random() * (max - min + 1)) + min
 };
-
 function getUniqueIndex(){
-
-    var randomIndex = randomNumber(0, allProducts.length-1);
-  
+    var randomIndex = randomNumber(0, (allProducts.length - 1));
     while(recentRandomNumbers.includes(randomIndex)){
-      randomIndex = randomNumber(0, allProducts.length-1);
+      randomIndex = randomNumber(0, allProducts.length - 1);
     }
-  
-    if(recentRandomNumbers.length > 4){
+    if(recentRandomNumbers.length > 3){
       recentRandomNumbers.shift();
     }
-  
     recentRandomNumbers.push(randomIndex);
     return randomIndex;
 }
-  
 function handleClick(){
+  if (questionLimit < 25) {
     var chosenImg = event.target.title;
-  
+    
     for(var i = 0; i < allProducts.length; i++){
       if(allProducts[i].name === chosenImg){
         allProducts[i].votes++;
       }
     }
     render();
+  }
 };
-
-
-
-
-
 productContainerEl.addEventListener('click', handleClick);
-
 render();
