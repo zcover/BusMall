@@ -5,3 +5,20 @@ body {
 canvas {
     border: 2px solid black;
 }
+
+#pageBorder {
+    border: double white 1px;
+}
+#product-container {
+    border: dotted green 20px;
+}
+img {
+    border-color: slateblue;
+    border: solid 3px;
+    width: 450px;
+    height: auto;
+}
+canvas {
+    background-color: rgba(221, 216, 216, 0.527);
+    border: solid rgb(211, 0, 0) 20px;
+}
