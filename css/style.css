@@ -18,3 +18,7 @@ img {
     width: 450px;
     height: auto;
 }
+canvas {
+    background-color: rgba(221, 216, 216, 0.527);
+    border: solid rgb(211, 0, 0) 20px;
+}
