@@ -18,7 +18,9 @@ var productContainerEl = document.getElementById('product-container');
 var ulEl = document.getElementById('results');
 var allProducts = [];
 var recentRandomNumbers = [];
-var questionLimit = 0
+var questionLimit = 0;
+var globalNameBank = [];
+var globalVotesBank =[];
 
 //Constructor
 function Product(name){
@@ -106,7 +108,8 @@ function handleClick(){
   }
   else{
     productContainerEl.removeEventListener('click', handleClick);
-    generateList();
+    // generateList();
+    fillArrays();
   };
 }
 
@@ -125,4 +128,65 @@ function generateList(){
   for(var i=0; i < allProducts.length; i++){
     allProducts[i].generateResults();
   }
+};
+
+function fillArrays(){
+  for( var i = 0; i <allProducts.length; i++){
+    globalNameBank.push(allProducts[i].name);
+    globalVotesBank.push(allProducts[i].votes);
+  }
+  generatechart();
+};
+
+
+
+
+
+
+//Goal
+//function that fills up the global votes, and global names
+
+
+
+
+
+
+function generatechart(){
+  var ctx = document.getElementById('my-canvas').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: globalNameBank,
+        datasets: [{
+            label: '# of Votes',
+            data: globalVotesBank,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 };
