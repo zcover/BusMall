@@ -15,6 +15,7 @@ var productOneEl = document.getElementById('product-one');
 var productTwoEl = document.getElementById('product-two');
 var productThreeEl = document.getElementById('product-three');
 var productContainerEl = document.getElementById('product-container');
+var ulEl = document.getElementById('results');
 var allProducts = [];
 var recentRandomNumbers = [];
 var questionLimit = 0
@@ -50,27 +51,27 @@ new Product('water-can.jpg');
 new Product('wine-glass.jpg');
 //render function
 function render(){
-    var randomIndex = getUniqueIndex();
-    allProducts[randomIndex].views++;
-    productOneEl.src = allProducts[randomIndex].filepath;
-    productOneEl.alt = allProducts[randomIndex].name;
-    productOneEl.title = allProducts[randomIndex].name;
+  var randomIndex = getUniqueIndex();
+  allProducts[randomIndex].views++;
+  productOneEl.src = allProducts[randomIndex].filepath;
+  productOneEl.alt = allProducts[randomIndex].name;
+  productOneEl.title = allProducts[randomIndex].name;
 
-    var randomIndex = getUniqueIndex();
-    allProducts[randomIndex].views++;
-    productTwoEl.src = allProducts[randomIndex].filepath;
-    productTwoEl.alt = allProducts[randomIndex].name;
-    productTwoEl.title = allProducts[randomIndex].name;
+  var randomIndex = getUniqueIndex();
+  allProducts[randomIndex].views++;
+  productTwoEl.src = allProducts[randomIndex].filepath;
+  productTwoEl.alt = allProducts[randomIndex].name;
+  productTwoEl.title = allProducts[randomIndex].name;
 
-    var randomIndex = getUniqueIndex();
-    allProducts[randomIndex].views++;
-    productThreeEl.src = allProducts[randomIndex].filepath;
-    productThreeEl.alt = allProducts[randomIndex].filepath;
-    productThreeEl.title = allProducts[randomIndex].filepath;
-    
-    questionLimit++;
-    console.log(questionLimit,' is the question limit counter');
-    console.log(questionLimit, ' images voted on, ', 25 - questionLimit, ' images left.');
+  var randomIndex = getUniqueIndex();
+  allProducts[randomIndex].views++;
+  productThreeEl.src = allProducts[randomIndex].filepath;
+  productThreeEl.alt = allProducts[randomIndex].filepath;
+  productThreeEl.title = allProducts[randomIndex].filepath;
+  
+  questionLimit++;
+  console.log(questionLimit,' is the question limit counter');
+  console.log(questionLimit, ' images voted on, ', 25 - questionLimit, ' images left.');
 };
 //helper function
 function randomNumber(min, max) {
@@ -91,6 +92,7 @@ function getUniqueIndex(){
     recentRandomNumbers.push(randomIndex);
     return randomIndex;
 }
+
 function handleClick(){
   if (questionLimit < 25) {
     var chosenImg = event.target.title;
@@ -102,19 +104,21 @@ function handleClick(){
     }
     render();
   }
-  generateList();
-};
-
+  else{
+    productContainerEl.removeEventListener('click', handleClick);
+    generateList();
+  };
+}
 
 productContainerEl.addEventListener('click', handleClick);
 render();
 
 Product.prototype.generateResults = function() {
-  var ulEl = document.getElementById('results');
   this.results=`${this.votes} votes for ${this.name}`;
   var liEl = document.createElement('li');
   liEl.textContent = this.results;
   ulEl.appendChild(liEl)
+  
 };
 
 function generateList(){
